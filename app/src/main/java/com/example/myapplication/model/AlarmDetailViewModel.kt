@@ -31,6 +31,7 @@ class AlarmDetailViewModel(alarmId:UUID?): ViewModel() {
             clockRepository.addAlarm(alarm = alarm)
         }
     }
+
     fun updateAlarm(alarm: Alarm){
         viewModelScope.launch (Dispatchers.IO) {
             clockRepository.updateAlarm(alarm)

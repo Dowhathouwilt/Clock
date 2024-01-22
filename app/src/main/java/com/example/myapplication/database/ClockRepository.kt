@@ -34,9 +34,3 @@ class ClockRepository private constructor(context:Context){
     }
 }
 
-class ClockApplication():Application(){
-    override fun onCreate() {
-        super.onCreate()
-        ClockRepository.initialize(this)
-    }
-}
