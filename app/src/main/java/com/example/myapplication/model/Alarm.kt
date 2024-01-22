@@ -8,6 +8,6 @@ import java.util.UUID
 data class Alarm(
    @PrimaryKey val id: UUID,
     val label: String = "Alarm",
-    val isActive: Boolean = false
+    var isActive: Boolean = false
 )
 
