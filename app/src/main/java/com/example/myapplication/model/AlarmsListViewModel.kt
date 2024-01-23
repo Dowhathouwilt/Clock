@@ -23,17 +23,30 @@ class AlarmsListViewModel: ViewModel() {
         }
     }
 
-    fun updateList(iterator: Int, isSelected: Boolean):List<Alarm>{
-       alarms = alarms.mapIndexed{ j, item ->
+     fun updateList(iterator: Int):List<Alarm>{
+        alarms = alarms.mapIndexed{ j, item ->
             if (iterator == j){
-                item.copy(id = item.id, label = item.label, isActive = isSelected)
+                item.copy(id = item.id, label = item.label, isActive = !item.isActive)
             } else item
         }
         return alarms
     }
 
+    fun deleteAlarm(alarm: Alarm){
+        viewModelScope.launch {
+            clockRepository.deleteAlarm(alarm)
+        }
+        deleteFromList(alarm)
+    }
+
+    private fun deleteFromList(alarm: Alarm):List<Alarm>{
+        alarms = alarms.minus(alarm)
+        return alarms
+    }
+
+
     fun updateAlarm(alarm: Alarm){
-        viewModelScope.launch (Dispatchers.IO) {
+        viewModelScope.launch {
             clockRepository.updateAlarm(alarm)
         }
     }

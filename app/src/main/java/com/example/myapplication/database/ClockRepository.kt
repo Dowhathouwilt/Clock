@@ -20,6 +20,7 @@ class ClockRepository private constructor(context:Context){
     suspend fun getAlarm(id: UUID):Alarm = database.AlarmDao().getAlarm(id)
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
+    suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
 
     companion object {
         private var INSTANCE: ClockRepository? = null

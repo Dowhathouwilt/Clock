@@ -1,9 +1,6 @@
 package com.example.myapplication.database
 
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.Query
-import androidx.room.Update
+import androidx.room.*
 import com.example.myapplication.model.Alarm
 import java.util.UUID
 
@@ -15,6 +12,9 @@ interface AlarmDao {
     suspend fun getAlarm(id:UUID): Alarm
     @Update
     suspend fun updateAlarm(alarm: Alarm)
+
     @Insert
     suspend fun addAlarm(alarm: Alarm)
+    @Delete
+    suspend fun deleteAlarm(alarm: Alarm)
 }

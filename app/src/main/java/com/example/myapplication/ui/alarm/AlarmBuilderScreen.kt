@@ -1,10 +1,9 @@
 package com.example.myapplication.ui.alarm
 
 
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
+
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
@@ -15,18 +14,15 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.myapplication.R
-import com.example.myapplication.model.Alarm
 import com.example.myapplication.model.AlarmsListViewModel
 import com.example.myapplication.ui.navigation.Screen
-import java.util.*
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AlaramBuilderScreen(navController: NavController){
 
-   // val alarm = Alarm(id = UUID.randomUUID(),label = "Alarm", isActive = alarmState)
+    var toDelete: Boolean by remember{mutableStateOf(false)}
     val alarmsListViewModel:AlarmsListViewModel = viewModel<AlarmsListViewModel>()
     val alarmsList = alarmsListViewModel.alarms
 
@@ -38,15 +34,22 @@ fun AlaramBuilderScreen(navController: NavController){
                     Text("")
                 },
                 actions = {
-                    IconButton(onClick = {
-                        navController.navigate(
-                            route = Screen.AlarmDetails.getId(null)
+                    Row {
+                        Button(
+                            onClick = { toDelete = !toDelete },
+                            content = {
+                                if (toDelete) Text(text = "Done")
+                                else Text(text = "Edit")
+                            }
                         )
-                    }){
-                        Icon(imageVector = Icons.Filled.Add, contentDescription = "add")
+                        Spacer(modifier = Modifier.weight(1f))
+                        IconButton(
+                            onClick = { navController.navigate(route = Screen.AlarmDetails.getId(null)) },
+                            content = { Icon(imageVector = Icons.Filled.Add, contentDescription = "add") }
+                        )
                     }
                 }
-        )},
+            )},
         content = {
             innerPadding ->
             Column(modifier = Modifier.padding(innerPadding)){
@@ -54,27 +57,20 @@ fun AlaramBuilderScreen(navController: NavController){
                     itemsIndexed(items = alarmsList){iterator, alarm ->
                         AlarmCell(
                             onClickCheckbox ={
-                                alarmsListViewModel.updateList(iterator = iterator, isSelected = it)
+                                alarmsListViewModel.updateList(iterator = iterator)
                             },
                             onClickedRow = {
                                 navController.navigate(route = Screen.AlarmDetails.getId(alarm.id))
+                            },
+                            toDelete = toDelete,
+                            onDeleteAlarm = {
+                                alarmsListViewModel.deleteAlarm(alarm)
                             },
                             alarm = alarm
                         )
                     }
                 }
-
-              /*  AlarmCell(
-                    onClickCheckbox = {
-                        alarmState = it },
-                    onClickedRow = {
-                        navController.navigate(route = Screen.AlarmDetails.getId(alarm.id))
-                    },
-                    alarm = alarm
-                )*/
             }
-
         }
     )
-
 }
