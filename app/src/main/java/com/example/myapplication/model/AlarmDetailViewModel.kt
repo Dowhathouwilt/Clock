@@ -37,6 +37,11 @@ class AlarmDetailViewModel(alarmId:UUID?): ViewModel() {
             clockRepository.updateAlarm(alarm)
         }
     }
+
+    fun updateUI(label: String):Alarm{
+        alarm = alarm.copy(id = alarm.id, label = label)
+        return alarm
+    }
 }
 
 class AlarmDetailViewModelFactory(private val alarmId: UUID?):ViewModelProvider.Factory{

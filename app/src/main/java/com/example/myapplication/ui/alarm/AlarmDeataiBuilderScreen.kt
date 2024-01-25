@@ -53,6 +53,7 @@ fun AlarmDetailBuilderScreen(id: UUID?, navController: NavController){
         content = {
             innerPadding ->
             AlarmDetail(modifier = Modifier.padding(innerPadding), alarm = alarmState, onSetAlarmLabel = {
+                alarmDetailViewModel.updateUI(it)
             })
         }
     )
