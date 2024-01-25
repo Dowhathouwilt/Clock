@@ -64,7 +64,7 @@ fun AlaramBuilderScreen(navController: NavController){
                             },
                             toDelete = toDelete,
                             onDeleteAlarm = {
-                                alarmsListViewModel.deleteAlarm(alarm)
+                                alarmsListViewModel.deleteFromList(alarm)
                             },
                             alarm = alarm
                         )
