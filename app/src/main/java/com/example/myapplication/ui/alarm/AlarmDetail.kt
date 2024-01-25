@@ -40,7 +40,7 @@ fun AlarmDetail(
         .padding(all = 8.dp),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally) {
-            TextField(
+            OutlinedTextField(
                 value = alarm.label,
                 onValueChange = {
                     onSetAlarmLabel(it)
@@ -69,6 +69,7 @@ fun AlarmDetail(
                         focusManager.clearFocus()
                     }
                 ),
+                singleLine = true
             )
     }
 }
