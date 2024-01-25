@@ -31,17 +31,19 @@ fun AlarmCell(
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
     ){
-        if (toDelete) {
-            IconButton(
-                onClick = { onDeleteAlarm() },
-                content = { Icon(imageVector = Icons.Filled.Delete, contentDescription = "delete") }
-            )
-        }
-        Column {
-            Text(text = "10:30",
-                style = MaterialTheme.typography.titleLarge)
-            Text(text = alarm.label,
-                style = MaterialTheme.typography.titleSmall)
+        Row(verticalAlignment = Alignment.CenterVertically) {
+            if (toDelete) {
+                IconButton(
+                    onClick = { onDeleteAlarm() },
+                    content = { Icon(imageVector = Icons.Filled.Delete, contentDescription = "delete") }
+                )
+            }
+            Column {
+                Text(text = "10:30",
+                    style = MaterialTheme.typography.titleLarge)
+                Text(text = alarm.label,
+                    style = MaterialTheme.typography.titleSmall)
+            }
         }
         Checkbox(onCheckedChange = onClickCheckbox, checked = alarm.isActive)
     }

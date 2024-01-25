@@ -12,7 +12,6 @@ interface AlarmDao {
     suspend fun getAlarm(id:UUID): Alarm
     @Update
     suspend fun updateAlarm(alarm: Alarm)
-
     @Insert
     suspend fun addAlarm(alarm: Alarm)
     @Delete
