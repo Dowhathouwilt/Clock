@@ -47,6 +47,15 @@ class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
         alarm = alarm.copy(id = alarm.id, label = label)
         return alarm
     }
+
+    fun addRepeatToState(alarmRepeat: AlarmRepeat) {
+        alarmRepeats = if (alarmRepeats.contains(alarmRepeat)) {
+            alarmRepeats.minus(alarmRepeat)
+        }else{
+            alarmRepeats.plus(alarmRepeat)
+        }
+
+    }
 }
 
 class AlarmDetailViewModelFactory(private val alarmId: UUID?) : ViewModelProvider.Factory {

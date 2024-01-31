@@ -9,6 +9,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import com.example.myapplication.ui.alarm.AlaramBuilderScreen
 import com.example.myapplication.ui.alarm.AlarmDetailBuilderScreen
+import com.example.myapplication.ui.alarm.RepeatBuilderScreen
 import java.util.IllegalFormatConversionException
 import java.util.UUID
 
@@ -41,6 +42,12 @@ fun SetupNavGraph(
                     }
                 }, navController = navController
             )
+        }
+        composable(
+            route = Screen.AlarmRepeatScreen.route,
+
+        ){
+            RepeatBuilderScreen()
         }
     }
 }
