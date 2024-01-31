@@ -11,41 +11,45 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-class AlarmDetailViewModel(alarmId:UUID?): ViewModel() {
-    private val clockRepository:ClockRepository = ClockRepository.get()
+class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
+    private val clockRepository: ClockRepository = ClockRepository.get()
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
+    var alarmRepeats by mutableStateOf(emptyList<AlarmRepeat>())
 
     init {
         viewModelScope.launch {
             alarm = if (alarmId == null) {
                 alarm
-            }else{
+            } else {
                 clockRepository.getAlarm(alarmId)
             }
         }
+        viewModelScope.launch {
+            alarmRepeats = clockRepository.getAlarmRepeats()
+        }
     }
 
-    fun addAlarm(alarm: Alarm){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun addAlarm(alarm: Alarm) {
+        viewModelScope.launch(Dispatchers.IO) {
             clockRepository.addAlarm(alarm = alarm)
         }
     }
 
-    fun updateAlarm(alarm: Alarm){
-        viewModelScope.launch (Dispatchers.IO) {
+    fun updateAlarm(alarm: Alarm) {
+        viewModelScope.launch(Dispatchers.IO) {
             clockRepository.updateAlarm(alarm)
         }
     }
 
-    fun updateUI(label: String):Alarm{
+    fun updateUI(label: String): Alarm {
         alarm = alarm.copy(id = alarm.id, label = label)
         return alarm
     }
 }
 
-class AlarmDetailViewModelFactory(private val alarmId: UUID?):ViewModelProvider.Factory{
-    override fun <T : ViewModel> create(modelClass: Class<T>): T{
+class AlarmDetailViewModelFactory(private val alarmId: UUID?) : ViewModelProvider.Factory {
+    override fun <T : ViewModel> create(modelClass: Class<T>): T {
         return AlarmDetailViewModel(alarmId) as T
     }
 }

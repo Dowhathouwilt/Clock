@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Clock</string>
+    <string name="repeat_mondays">Every Monday</string>
+    <string name="repeat_tuesday">Every Tuesday</string>
+    <string name="repeat_wednesday">Every Wednesday</string>
+    <string name="repeat_thursday">Every Thursday</string>
+    <string name="repeat_friday">Every Friday</string>
+    <string name="repeat_saturday">Every Saturday</string>
+    <string name="repeat_sunday">Every Sunday</string>
 </resources>

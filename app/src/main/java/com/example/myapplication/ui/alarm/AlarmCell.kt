@@ -23,14 +23,15 @@ fun AlarmCell(
     onDeleteAlarm: () -> Unit,
     toDelete: Boolean,
     alarm: Alarm
-){
-    Row(modifier = Modifier
-        .fillMaxWidth()
-        .padding(15.dp)
-        .clickable { onClickedRow() },
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(15.dp)
+            .clickable { onClickedRow() },
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.SpaceBetween
-    ){
+    ) {
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (toDelete) {
                 IconButton(
@@ -39,12 +40,16 @@ fun AlarmCell(
                 )
             }
             Column {
-                Text(text = "10:30",
-                    style = MaterialTheme.typography.titleLarge)
-                Text(text = alarm.label,
-                    style = MaterialTheme.typography.titleSmall)
+                Text(
+                    text = "10:30",
+                    style = MaterialTheme.typography.titleLarge
+                )
+                Text(
+                    text = alarm.label,
+                    style = MaterialTheme.typography.titleSmall
+                )
             }
         }
-        Checkbox(onCheckedChange = onClickCheckbox, checked = alarm.isActive)
+        Switch(onCheckedChange = onClickCheckbox, checked = alarm.isActive)
     }
 }

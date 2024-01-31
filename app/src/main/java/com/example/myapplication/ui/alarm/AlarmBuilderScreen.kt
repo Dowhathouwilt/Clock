@@ -20,12 +20,11 @@ import com.example.myapplication.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlaramBuilderScreen(navController: NavController){
+fun AlaramBuilderScreen(navController: NavController) {
 
-    var toDelete: Boolean by remember{mutableStateOf(false)}
-    val alarmsListViewModel:AlarmsListViewModel = viewModel<AlarmsListViewModel>()
+    var toDelete: Boolean by remember { mutableStateOf(false) }
+    val alarmsListViewModel: AlarmsListViewModel = viewModel<AlarmsListViewModel>()
     val alarmsList = alarmsListViewModel.alarms
-
 
     Scaffold(
         topBar = {
@@ -49,14 +48,14 @@ fun AlaramBuilderScreen(navController: NavController){
                         )
                     }
                 }
-            )},
-        content = {
-            innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)){
+            )
+        },
+        content = { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
                 LazyColumn {
-                    itemsIndexed(items = alarmsList){iterator, alarm ->
+                    itemsIndexed(items = alarmsList) { iterator, alarm ->
                         AlarmCell(
-                            onClickCheckbox ={
+                            onClickCheckbox = {
                                 alarmsListViewModel.updateList(iterator = iterator)
                             },
                             onClickedRow = {
