@@ -16,6 +16,7 @@ class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
     var alarmRepeats by mutableStateOf(emptyList<AlarmRepeat>())
+        private set
 
     init {
         viewModelScope.launch {
