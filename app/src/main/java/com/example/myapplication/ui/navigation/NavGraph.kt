@@ -41,15 +41,15 @@ fun SetupNavGraph(
             }),
             route = Screen.AlarmDetails.route
         ) {
-            val id:UUID? = when (it.arguments?.getString(ALARM_DETAILS_ARGUMENT)){
+            val id: UUID? = when (it.arguments?.getString(ALARM_DETAILS_ARGUMENT)) {
                 null -> null
                 else -> {
                     UUID.fromString(it.arguments?.getString(ALARM_DETAILS_ARGUMENT))
                 }
             }
-            val sharedViewModel = it.sharedViewModel<AlarmDetailViewModel>(factory = AlarmDetailViewModelFactory(id), navController)
+            val sharedViewModel =
+                it.sharedViewModel<AlarmDetailViewModel>(factory = AlarmDetailViewModelFactory(id), navController)
             AlarmDetailBuilderScreen(
-                id = id,
                 alarmDetailViewModel = sharedViewModel,
                 navController = navController
             )
@@ -63,11 +63,11 @@ fun SetupNavGraph(
 }
 
 @Composable
-inline fun <reified T:ViewModel> NavBackStackEntry.sharedViewModel(
+inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     factory: ViewModelProvider.Factory?,
     navController: NavHostController
-):T{
-    val navGraphRoute = destination.parent?.route ?:return viewModel(factory = factory)
+): T {
+    val navGraphRoute = destination.parent?.route ?: return viewModel(factory = factory)
     val parentEntry = remember(this) {
         navController.getBackStackEntry(navGraphRoute)
     }

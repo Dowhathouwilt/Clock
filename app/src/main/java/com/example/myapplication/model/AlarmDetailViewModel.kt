@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.UUID
 
-class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
+class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
     private val clockRepository: ClockRepository = ClockRepository.get()
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
@@ -31,19 +31,27 @@ class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
         }
     }
 
-    fun addAlarm(alarm: Alarm) {
+    fun addOrUpdate(alarm: Alarm) {
+        when (alarmId) {
+            null -> addAlarm(alarm)
+            else -> updateAlarm(alarm)
+        }
+    }
+
+    private fun addAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.addAlarm(alarm = alarm)
         }
     }
 
-    fun updateAlarm(alarm: Alarm) {
+    private fun updateAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.updateAlarm(alarm)
         }
     }
 
-    fun updateUI(label: String): Alarm {
+
+    fun updateLabel(label: String): Alarm {
         alarm = alarm.copy(id = alarm.id, label = label)
         return alarm
     }
@@ -51,7 +59,7 @@ class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
     fun addRepeatToState(alarmRepeat: AlarmRepeat) {
         alarmRepeats = if (alarmRepeats.contains(alarmRepeat)) {
             alarmRepeats.minus(alarmRepeat)
-        }else{
+        } else {
             alarmRepeats.plus(alarmRepeat)
         }
 
