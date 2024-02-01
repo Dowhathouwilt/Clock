@@ -14,9 +14,10 @@ import java.util.UUID
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlarmDetailBuilderScreen(id: UUID?, navController: NavController) {
-    val alarmDetailViewModel: AlarmDetailViewModel =
-        viewModel<AlarmDetailViewModel>(factory = AlarmDetailViewModelFactory(id))
+fun AlarmDetailBuilderScreen(id: UUID?,
+                             navController: NavController,
+                             alarmDetailViewModel: AlarmDetailViewModel
+) {
     val alarmState = alarmDetailViewModel.alarm
     val alarmRepeatsState = alarmDetailViewModel.alarmRepeats
 

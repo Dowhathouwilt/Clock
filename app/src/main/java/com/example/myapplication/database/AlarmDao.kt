@@ -22,8 +22,8 @@ interface AlarmDao {
     @Delete
     suspend fun deleteAlarm(alarm: Alarm)
 
-    @Query("SELECT * FROM alarmrepeat")
-    suspend fun getAlarmRepeats(): List<AlarmRepeat>
+    @Query("SELECT * FROM alarmrepeat WHERE alarmId=(:alarmId)")
+    suspend fun getAlarmRepeats(alarmId:UUID): List<AlarmRepeat>
 
     @Insert
     suspend fun insertAlarmRepeat(alarmRepeats: List<AlarmRepeat>)

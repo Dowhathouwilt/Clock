@@ -23,7 +23,7 @@ class ClockRepository private constructor(context: Context) {
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
     suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
-    suspend fun getAlarmRepeats(): List<AlarmRepeat> = database.AlarmDao().getAlarmRepeats()
+    suspend fun getAlarmRepeats(alarmId: UUID): List<AlarmRepeat> = database.AlarmDao().getAlarmRepeats(alarmId)
 
     companion object {
         private var INSTANCE: ClockRepository? = null

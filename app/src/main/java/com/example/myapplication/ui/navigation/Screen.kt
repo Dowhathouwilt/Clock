@@ -11,5 +11,5 @@ sealed class Screen(val route: String) {
             return "alarmDetail_screen/$id"
         }
     }
-    data object AlarmRepeatScreen: Screen(route = "alarmRepeat_screen")
+    data object AlarmRepeatsScreen: Screen(route = "alarmRepeats_screen")
 }

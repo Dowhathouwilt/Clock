@@ -5,11 +5,10 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.navigation.NavController
 import com.example.myapplication.model.Repeat
 
 @Composable
-fun RepeatBuilderScreen() {
+fun RepeatsBuilderScreen() {
     Column {
         LazyColumn {
             itemsIndexed(Repeat.entries.toTypedArray()) { index, repeat ->

@@ -27,7 +27,7 @@ class AlarmDetailViewModel(alarmId: UUID?) : ViewModel() {
             }
         }
         viewModelScope.launch {
-            alarmRepeats = clockRepository.getAlarmRepeats()
+            alarmRepeats = clockRepository.getAlarmRepeats(alarm.id)
         }
     }
 
