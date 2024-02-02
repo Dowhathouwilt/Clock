@@ -43,7 +43,7 @@ fun AlaramBuilderScreen(navController: NavController) {
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         IconButton(
-                            onClick = { navController.navigate(route = Screen.AlarmDetails.getId(null)) },
+                            onClick = { navController.navigate(route = Screen.AlarmDetailsGraph.getId(null)) },
                             content = { Icon(imageVector = Icons.Filled.Add, contentDescription = "add") }
                         )
                     }
@@ -59,7 +59,7 @@ fun AlaramBuilderScreen(navController: NavController) {
                                 alarmsListViewModel.updateList(iterator = iterator)
                             },
                             onClickedRow = {
-                                navController.navigate(route = Screen.AlarmDetails.getId(alarm.id))
+                                navController.navigate(route = Screen.AlarmDetailsGraph.getId(alarm.id))
                             },
                             toDelete = toDelete,
                             onDeleteAlarm = {

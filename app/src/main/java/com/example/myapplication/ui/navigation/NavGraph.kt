@@ -6,13 +6,10 @@ import androidx.core.app.NavUtils
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavBackStackEntry
-import androidx.navigation.NavHostController
-import androidx.navigation.NavType
+import androidx.navigation.*
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
-import androidx.navigation.navArgument
 import com.example.myapplication.model.AlarmDetailViewModel
 import com.example.myapplication.model.AlarmDetailViewModelFactory
 import com.example.myapplication.ui.alarm.AlaramBuilderScreen
@@ -34,11 +31,20 @@ fun SetupNavGraph(
         ) {
             AlaramBuilderScreen(navController)
         }
+        alarmDetailsGraph(navController)
+    }
+}
+
+fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController) {
+    navigation(
+        startDestination = Screen.AlarmDetails.route,
+        route = Screen.AlarmDetailsGraph.route,
+        arguments = listOf(navArgument(ALARM_DETAILS_ARGUMENT) {
+            type = NavType.StringType
+            nullable = true
+        })
+    ) {
         composable(
-            arguments = listOf(navArgument(ALARM_DETAILS_ARGUMENT) {
-                type = NavType.StringType
-                nullable = true
-            }),
             route = Screen.AlarmDetails.route
         ) {
             val id: UUID? = when (it.arguments?.getString(ALARM_DETAILS_ARGUMENT)) {
