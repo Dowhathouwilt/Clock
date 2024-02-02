@@ -53,8 +53,10 @@ fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController) {
                     UUID.fromString(it.arguments?.getString(ALARM_DETAILS_ARGUMENT))
                 }
             }
-            val sharedViewModel =
-                it.sharedViewModel<AlarmDetailViewModel>(factory = AlarmDetailViewModelFactory(id), navController)
+            val sharedViewModel = it.sharedViewModel<AlarmDetailViewModel>(
+                factory = AlarmDetailViewModelFactory(id),
+                navController = navController
+            )
             AlarmDetailBuilderScreen(
                 alarmDetailViewModel = sharedViewModel,
                 navController = navController
