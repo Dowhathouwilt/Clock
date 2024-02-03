@@ -38,19 +38,6 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         }
     }
 
-    private fun addAlarm(alarm: Alarm) {
-        viewModelScope.launch(Dispatchers.IO) {
-            clockRepository.addAlarm(alarm = alarm)
-        }
-    }
-
-    private fun updateAlarm(alarm: Alarm) {
-        viewModelScope.launch(Dispatchers.IO) {
-            clockRepository.updateAlarm(alarm)
-        }
-    }
-
-
     fun updateLabel(label: String): Alarm {
         alarm = alarm.copy(id = alarm.id, label = label)
         return alarm
@@ -62,7 +49,18 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         } else {
             alarmRepeats.plus(alarmRepeat)
         }
+    }
 
+    private fun addAlarm(alarm: Alarm) {
+        viewModelScope.launch(Dispatchers.IO) {
+            clockRepository.addAlarm(alarm = alarm)
+        }
+    }
+
+    private fun updateAlarm(alarm: Alarm) {
+        viewModelScope.launch(Dispatchers.IO) {
+            clockRepository.updateAlarm(alarm)
+        }
     }
 }
 
