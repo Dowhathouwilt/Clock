@@ -47,7 +47,7 @@ fun AlarmDetailBuilderScreen(
             RepeatLabel(
                 modifier = Modifier.padding(innerPadding),
                 navController = navController,
-                shortNames = alarmDetailViewModel.getStrings()
+                shortNames = ""
             )
             AlarmLabel(
                 modifier = Modifier.padding(innerPadding),
