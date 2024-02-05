@@ -40,6 +40,5 @@ fun RepeatLabel(modifier: Modifier, navController: NavController, shortNames: St
             singleLine = true,
             enabled = false
         )
-        Text(text = shortNames)
     }
 }

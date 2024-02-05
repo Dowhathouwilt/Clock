@@ -39,9 +39,10 @@ enum class Repeat(
         repeatName = R.string.repeat_sunday,
         shortName = R.string.short_sunday
     );
+
     companion object {
-        fun getRepeat(day: Int):Repeat{
-           return Repeat.entries[day]
+        fun getRepeat(day: Int): Repeat {
+            return Repeat.entries[day]
         }
     }
 

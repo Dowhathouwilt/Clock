@@ -4,9 +4,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapplication.model.AlarmDetailViewModel
+import com.example.myapplication.model.Repeat
 import com.example.myapplication.ui.navigation.Screen
 
 import java.util.UUID
@@ -18,7 +21,13 @@ fun AlarmDetailBuilderScreen(
     alarmDetailViewModel: AlarmDetailViewModel
 ) {
     val alarmState = alarmDetailViewModel.alarm
-    val alarmRepeatsState = alarmDetailViewModel.alarmRepeats
+    val shortNames = when (val alarmRepeats = alarmDetailViewModel.alarmRepeats) {
+        emptyList<Repeat>() -> "Never"
+        else -> alarmRepeats.map {
+            stringResource(it.shortName)
+        }.toString().removePrefix("[").removeSuffix("]")
+    }
+
 
     Scaffold(
         topBar = {
@@ -47,7 +56,7 @@ fun AlarmDetailBuilderScreen(
             RepeatLabel(
                 modifier = Modifier.padding(innerPadding),
                 navController = navController,
-                shortNames = ""
+                shortNames = shortNames
             )
             AlarmLabel(
                 modifier = Modifier.padding(innerPadding),
