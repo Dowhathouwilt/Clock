@@ -35,8 +35,6 @@ fun SetupNavGraph(
     }
 }
 
-
-
 @Composable
 inline fun <reified T : ViewModel> NavBackStackEntry.sharedViewModel(
     factory: ViewModelProvider.Factory?,

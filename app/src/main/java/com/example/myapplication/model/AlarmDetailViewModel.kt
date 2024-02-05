@@ -1,8 +1,11 @@
 package com.example.myapplication.model
 
+import android.content.res.loader.ResourcesProvider
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -15,8 +18,9 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
     private val clockRepository: ClockRepository = ClockRepository.get()
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
-    var alarmRepeats by mutableStateOf(emptyList<AlarmRepeat>())
+    var alarmRepeats by mutableStateOf(emptyList<Repeat>())
         private set
+
 
     init {
         viewModelScope.launch {
@@ -43,13 +47,18 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         return alarm
     }
 
-    fun addRepeatToState(alarmRepeat: AlarmRepeat) {
+    fun addRepeatToState(alarmRepeat: Repeat) {
         alarmRepeats = if (alarmRepeats.contains(alarmRepeat)) {
             alarmRepeats.minus(alarmRepeat)
         } else {
             alarmRepeats.plus(alarmRepeat)
         }
     }
+
+    fun containsInState(alarmRepeat: Repeat): Boolean {
+        return alarmRepeats.contains(alarmRepeat)
+    }
+
 
     private fun addAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {

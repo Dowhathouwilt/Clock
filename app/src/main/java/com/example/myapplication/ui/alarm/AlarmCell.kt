@@ -35,7 +35,7 @@ fun AlarmCell(
         Row(verticalAlignment = Alignment.CenterVertically) {
             if (toDelete) {
                 IconButton(
-                    onClick = { onDeleteAlarm() },
+                    onClick =  onDeleteAlarm,
                     content = { Icon(imageVector = Icons.Filled.Delete, contentDescription = "delete") }
                 )
             }

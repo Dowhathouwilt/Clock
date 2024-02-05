@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapplication.model.AlarmDetailViewModel
 import com.example.myapplication.ui.navigation.Screen
@@ -43,6 +44,11 @@ fun AlarmDetailBuilderScreen(
             )
         },
         content = { innerPadding ->
+            RepeatLabel(
+                modifier = Modifier.padding(innerPadding),
+                navController = navController,
+                shortNames = alarmDetailViewModel.getStrings()
+            )
             AlarmLabel(
                 modifier = Modifier.padding(innerPadding),
                 alarm = alarmState,

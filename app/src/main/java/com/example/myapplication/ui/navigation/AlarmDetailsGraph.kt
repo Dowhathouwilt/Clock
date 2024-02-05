@@ -42,7 +42,17 @@ fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController) {
         composable(
             route = Screen.AlarmRepeatsScreen.route,
         ) {
-            RepeatsBuilderScreen()
+            val id: UUID? = when (it.arguments?.getString(ALARM_DETAILS_ARGUMENT)) {
+                null -> null
+                else -> {
+                    UUID.fromString(it.arguments?.getString(ALARM_DETAILS_ARGUMENT))
+                }
+            }
+            val sharedViewModel = it.sharedViewModel<AlarmDetailViewModel>(
+                factory = AlarmDetailViewModelFactory(id),
+                navController = navController
+            )
+            RepeatsBuilderScreen(sharedViewModel)
         }
     }
 }

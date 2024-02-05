@@ -6,6 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myapplication.model.Alarm
 import com.example.myapplication.model.AlarmRepeat
+import com.example.myapplication.model.Repeat
 import java.util.UUID
 
 private const val DATABASE_NAME = "clock-database"
@@ -23,7 +24,12 @@ class ClockRepository private constructor(context: Context) {
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
     suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
-    suspend fun getAlarmRepeats(alarmId: UUID): List<AlarmRepeat> = database.AlarmDao().getAlarmRepeats(alarmId)
+    suspend fun getAlarmRepeats(alarmId: UUID): List<Repeat> {
+        val data = database.AlarmDao().getAlarmRepeats(alarmId)
+        return data.map {
+            Repeat.getRepeat(it.day)
+        }.toList()
+    }
 
     companion object {
         private var INSTANCE: ClockRepository? = null
