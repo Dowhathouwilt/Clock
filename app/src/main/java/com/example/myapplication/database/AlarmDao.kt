@@ -25,6 +25,9 @@ interface AlarmDao {
     @Query("SELECT * FROM alarmrepeat WHERE alarmId=(:alarmId)")
     suspend fun getAlarmRepeats(alarmId:UUID): List<AlarmRepeat>
 
+    @Query("SELECT * FROM alarmrepeat WHERE day=(:day)")
+    suspend fun getAlarmRepeats(day:Int): List<AlarmRepeat>
+
     @Insert
     suspend fun insertAlarmRepeat(alarmRepeats: List<AlarmRepeat>)
 

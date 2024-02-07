@@ -23,13 +23,24 @@ class ClockRepository private constructor(context: Context) {
     suspend fun getAlarm(id: UUID): Alarm = database.AlarmDao().getAlarm(id)
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
-    suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
+    suspend fun deleteAlarm(alarm: Alarm) {
+        database.AlarmDao().deleteAlarm(alarm)
+    }
     suspend fun getAlarmRepeats(alarmId: UUID): List<Repeat> {
         val data = database.AlarmDao().getAlarmRepeats(alarmId)
         return data.map {
             Repeat.getRepeat(it.day)
         }.toList()
     }
+    suspend fun insertAlarmRepeats(alarmId: UUID, alarmRepeats: List<Repeat>){
+        val data = alarmRepeats.map {
+            AlarmRepeat(it.ordinal, alarmId)
+        }
+        database.AlarmDao().insertAlarmRepeat(data)
+    }
+
+
+
 
     companion object {
         private var INSTANCE: ClockRepository? = null

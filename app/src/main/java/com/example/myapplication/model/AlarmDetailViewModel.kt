@@ -35,9 +35,9 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         }
     }
 
-    fun addOrUpdate(alarm: Alarm) {
+    fun addOrUpdate(alarm: Alarm, alarmRepeats: List<Repeat>) {
         when (alarmId) {
-            null -> addAlarm(alarm)
+            null -> addAlarm(alarm, alarmRepeats)
             else -> updateAlarm(alarm)
         }
     }
@@ -59,11 +59,19 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         return alarmRepeats.contains(alarmRepeat)
     }
 
+    private fun addRepeats(alarm: Alarm, alarmRepeats: List<Repeat>){
+        viewModelScope.launch(Dispatchers.IO) {
+            clockRepository.insertAlarmRepeats(alarm.id, alarmRepeats)
+        }
+    }
 
-    private fun addAlarm(alarm: Alarm) {
+
+    private fun addAlarm(alarm: Alarm, alarmRepeats: List<Repeat>) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.addAlarm(alarm = alarm)
+            addRepeats(alarm, alarmRepeats)
         }
+
     }
 
     private fun updateAlarm(alarm: Alarm) {
