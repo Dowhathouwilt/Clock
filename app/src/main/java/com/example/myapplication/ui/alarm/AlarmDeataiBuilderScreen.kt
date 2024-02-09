@@ -21,6 +21,9 @@ fun AlarmDetailBuilderScreen(
     alarmDetailViewModel: AlarmDetailViewModel
 ) {
     val alarmState = alarmDetailViewModel.alarm
+    val shortName: String = alarmState.repeat.map {
+        stringResource(it.shortName)
+    }.toString().removePrefix("[").removeSuffix("]")
 
     Scaffold(
         topBar = {
@@ -50,7 +53,7 @@ fun AlarmDetailBuilderScreen(
             RepeatLabel(
                 modifier = Modifier.padding(innerPadding),
                 navController = navController,
-                shortNames = ""
+                shortNames = shortName
             )
             AlarmLabel(
                 modifier = Modifier.padding(innerPadding),

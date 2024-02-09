@@ -10,8 +10,7 @@ import com.example.myapplication.R
 enum class Repeat(
     @StringRes val repeatName: Int,
     @StringRes val shortName: Int,
-
-) {
+    ) {
     Monday(
         repeatName = R.string.repeat_mondays,
         shortName = R.string.short_mondays,

@@ -7,15 +7,16 @@ import com.example.myapplication.model.Repeat
 @ProvidedTypeConverter
 class Converters {
     @TypeConverter
-    fun fromListRepeatToString(value: List<Repeat>):String {
-        return when (value){
+    fun fromListRepeatToString(value: List<Repeat>): String {
+        return when (value) {
             emptyList<Repeat>() -> ""
             else -> value.toString().removePrefix("[").removeSuffix("]")
         }
     }
+
     @TypeConverter
-    fun fromStringToListRepeat(value: String):List<Repeat>{
-        return when(value){
+    fun fromStringToListRepeat(value: String): List<Repeat> {
+        return when (value) {
             "" -> emptyList()
             else -> value.split(", ").map {
                 Repeat.valueOf(it)
