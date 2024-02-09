@@ -1,9 +1,11 @@
 package com.example.myapplication.model
 
 
+import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -49,6 +51,18 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
 
     fun containsRepeat(repeat: Repeat): Boolean {
         return alarm.repeat.contains(repeat)
+    }
+
+    @Composable
+    fun getShortNames(alarm: Alarm): String {
+        val shortName: String = when (alarm.repeat.size) {
+            0 -> "Never"
+            Repeat.entries.size -> "Every Day"
+            else -> alarm.repeat.map {
+                stringResource(it.shortName)
+            }.toString().removePrefix("[").removeSuffix("]")
+        }
+        return shortName
     }
 
     private fun addAlarm(alarm: Alarm) {
