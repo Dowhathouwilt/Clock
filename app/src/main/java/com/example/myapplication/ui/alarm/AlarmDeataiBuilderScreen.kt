@@ -21,13 +21,6 @@ fun AlarmDetailBuilderScreen(
     alarmDetailViewModel: AlarmDetailViewModel
 ) {
     val alarmState = alarmDetailViewModel.alarm
-    val alarmRepeats = alarmDetailViewModel.alarmRepeats
-    val shortNames = when (alarmRepeats) {
-        emptyList<Repeat>() -> "Never"
-        else -> alarmRepeats.map {
-            stringResource(it.shortName)
-        }.toString().removePrefix("[").removeSuffix("]")
-    }
 
     Scaffold(
         topBar = {
@@ -38,7 +31,7 @@ fun AlarmDetailBuilderScreen(
                 actions = {
                     Button(
                         onClick = {
-                            alarmDetailViewModel.addOrUpdate(alarmState, alarmRepeats)
+                            alarmDetailViewModel.addOrUpdate(alarmState)
                             navController.navigate(
                                 route = Screen.AlarmHome.route
                             ) {
@@ -52,11 +45,12 @@ fun AlarmDetailBuilderScreen(
                 }
             )
         },
+
         content = { innerPadding ->
             RepeatLabel(
                 modifier = Modifier.padding(innerPadding),
                 navController = navController,
-                shortNames = shortNames
+                shortNames = ""
             )
             AlarmLabel(
                 modifier = Modifier.padding(innerPadding),

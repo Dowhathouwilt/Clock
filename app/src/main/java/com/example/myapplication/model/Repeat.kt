@@ -10,10 +10,11 @@ import com.example.myapplication.R
 enum class Repeat(
     @StringRes val repeatName: Int,
     @StringRes val shortName: Int,
+
 ) {
     Monday(
         repeatName = R.string.repeat_mondays,
-        shortName = R.string.short_mondays
+        shortName = R.string.short_mondays,
     ),
     Tuesday(
         repeatName = R.string.repeat_tuesday,
@@ -38,12 +39,5 @@ enum class Repeat(
     Sunday(
         repeatName = R.string.repeat_sunday,
         shortName = R.string.short_sunday
-    );
-
-    companion object {
-        fun getRepeat(day: Int): Repeat {
-            return Repeat.entries[day]
-        }
-    }
-
+    )
 }

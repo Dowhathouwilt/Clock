@@ -1,13 +1,9 @@
 package com.example.myapplication.model
 
-import android.content.Context
-import android.content.res.loader.ResourcesProvider
-import androidx.compose.runtime.Composable
+
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
@@ -20,7 +16,6 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
     private val clockRepository: ClockRepository = ClockRepository.get()
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
-    var alarmRepeats: List<Repeat> by mutableStateOf(emptyList())
 
     init {
         viewModelScope.launch {
@@ -30,14 +25,11 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
                 clockRepository.getAlarm(alarmId)
             }
         }
-        viewModelScope.launch {
-            alarmRepeats = clockRepository.getAlarmRepeats(alarm.id)
-        }
     }
 
-    fun addOrUpdate(alarm: Alarm, alarmRepeats: List<Repeat>) {
+    fun addOrUpdate(alarm: Alarm) {
         when (alarmId) {
-            null -> addAlarm(alarm, alarmRepeats)
+            null -> addAlarm(alarm)
             else -> updateAlarm(alarm)
         }
     }
@@ -47,31 +39,22 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         return alarm
     }
 
-    fun addRepeatToState(alarmRepeat: Repeat) {
-        alarmRepeats = if (alarmRepeats.contains(alarmRepeat)) {
-            alarmRepeats.minus(alarmRepeat)
-        } else {
-            alarmRepeats.plus(alarmRepeat)
+    fun addOrDeleteRepeat(repeat: Repeat): Alarm {
+        alarm = when (containsRepeat(repeat)) {
+            true -> alarm.copy(id = alarm.id, repeat = alarm.repeat.minus(repeat))
+            false -> alarm.copy(id = alarm.id, repeat = alarm.repeat.plus(repeat))
         }
+        return alarm
     }
 
-    fun containsInState(alarmRepeat: Repeat): Boolean {
-        return alarmRepeats.contains(alarmRepeat)
+    fun containsRepeat(repeat: Repeat): Boolean {
+        return alarm.repeat.contains(repeat)
     }
 
-    private fun addRepeats(alarm: Alarm, alarmRepeats: List<Repeat>){
-        viewModelScope.launch(Dispatchers.IO) {
-            clockRepository.insertAlarmRepeats(alarm.id, alarmRepeats)
-        }
-    }
-
-
-    private fun addAlarm(alarm: Alarm, alarmRepeats: List<Repeat>) {
+    private fun addAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.addAlarm(alarm = alarm)
-            addRepeats(alarm, alarmRepeats)
         }
-
     }
 
     private fun updateAlarm(alarm: Alarm) {

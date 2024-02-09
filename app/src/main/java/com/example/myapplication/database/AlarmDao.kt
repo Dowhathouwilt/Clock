@@ -2,7 +2,6 @@ package com.example.myapplication.database
 
 import androidx.room.*
 import com.example.myapplication.model.Alarm
-import com.example.myapplication.model.AlarmRepeat
 import java.util.UUID
 
 @Dao
@@ -22,15 +21,4 @@ interface AlarmDao {
     @Delete
     suspend fun deleteAlarm(alarm: Alarm)
 
-    @Query("SELECT * FROM alarmrepeat WHERE alarmId=(:alarmId)")
-    suspend fun getAlarmRepeats(alarmId:UUID): List<AlarmRepeat>
-
-    @Query("SELECT * FROM alarmrepeat WHERE day=(:day)")
-    suspend fun getAlarmRepeats(day:Int): List<AlarmRepeat>
-
-    @Insert
-    suspend fun insertAlarmRepeat(alarmRepeats: List<AlarmRepeat>)
-
-    @Delete
-    suspend fun deleteRepeats(alarmRepeats: List<AlarmRepeat>)
 }

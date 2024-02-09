@@ -4,6 +4,7 @@ plugins {
     id("com.google.devtools.ksp")
 }
 
+
 android {
     namespace = "com.example.myapplication"
     compileSdk = 34

@@ -5,7 +5,6 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.example.myapplication.model.Alarm
-import com.example.myapplication.model.AlarmRepeat
 import com.example.myapplication.model.Repeat
 import java.util.UUID
 
@@ -16,30 +15,15 @@ class ClockRepository private constructor(context: Context) {
         context = context.applicationContext,
         klass = ClockDatabase::class.java,
         name = DATABASE_NAME
-    ).addMigrations(migration_1_2, migration_2_3)
+    ).addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5)
+        .addTypeConverter(Converters())
         .build()
 
     suspend fun getAlarms(): List<Alarm> = database.AlarmDao().getAlarms()
     suspend fun getAlarm(id: UUID): Alarm = database.AlarmDao().getAlarm(id)
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
-    suspend fun deleteAlarm(alarm: Alarm) {
-        database.AlarmDao().deleteAlarm(alarm)
-    }
-    suspend fun getAlarmRepeats(alarmId: UUID): List<Repeat> {
-        val data = database.AlarmDao().getAlarmRepeats(alarmId)
-        return data.map {
-            Repeat.getRepeat(it.day)
-        }.toList()
-    }
-    suspend fun insertAlarmRepeats(alarmId: UUID, alarmRepeats: List<Repeat>){
-        val data = alarmRepeats.map {
-            AlarmRepeat(it.ordinal, alarmId)
-        }
-        database.AlarmDao().insertAlarmRepeat(data)
-    }
-
-
+    suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
 
 
     companion object {

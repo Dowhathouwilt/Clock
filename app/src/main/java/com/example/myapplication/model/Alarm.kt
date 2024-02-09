@@ -12,13 +12,6 @@ data class Alarm(
     val id: UUID,
     val label: String = "Alarm",
     val isActive: Boolean = false,
-    val repeat: String? = null
-)
-
-@Entity
-data class AlarmRepeat(
-    val day: Int,
-    @PrimaryKey(autoGenerate = false)
-    val alarmId: UUID
+    val repeat: List<Repeat> = emptyList()
 )
 
