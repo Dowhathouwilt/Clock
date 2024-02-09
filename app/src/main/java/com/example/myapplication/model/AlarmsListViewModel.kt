@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
 
-class AlarmsListViewModel: ViewModel() {
+class AlarmsListViewModel : ViewModel() {
     private val clockRepository: ClockRepository = ClockRepository.get()
 
     var alarms: List<Alarm> by mutableStateOf(emptyList())
@@ -23,29 +23,29 @@ class AlarmsListViewModel: ViewModel() {
         }
     }
 
-     fun updateList(iterator: Int):List<Alarm>{
-         alarms = alarms.mapIndexed { j, item ->
-             if (iterator == j) {
-                 item.copy(id = item.id, label = item.label, isActive = !item.isActive)
-             } else item
-         }
-         updateAlarm(alarms[iterator])
-         return alarms
+    fun updateList(iterator: Int): List<Alarm> {
+        alarms = alarms.mapIndexed { j, item ->
+            if (iterator == j) {
+                item.copy(id = item.id, label = item.label, isActive = !item.isActive)
+            } else item
+        }
+        updateAlarm(alarms[iterator])
+        return alarms
     }
 
-     fun deleteFromList(alarm: Alarm):List<Alarm>{
-         deleteAlarm(alarm)
-         alarms = alarms.minus(alarm)
-         return alarms
+    fun deleteFromList(alarm: Alarm): List<Alarm> {
+        deleteAlarm(alarm)
+        alarms = alarms.minus(alarm)
+        return alarms
     }
 
-    private fun updateAlarm(alarm: Alarm){
+    private fun updateAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.updateAlarm(alarm)
         }
     }
 
-    private fun deleteAlarm(alarm: Alarm){
+    private fun deleteAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
             clockRepository.deleteAlarm(alarm)
         }

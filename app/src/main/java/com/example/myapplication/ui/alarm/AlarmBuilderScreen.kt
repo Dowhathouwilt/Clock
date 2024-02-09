@@ -20,12 +20,11 @@ import com.example.myapplication.ui.navigation.Screen
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlaramBuilderScreen(navController: NavController){
+fun AlaramBuilderScreen(navController: NavController) {
 
-    var toDelete: Boolean by remember{mutableStateOf(false)}
-    val alarmsListViewModel:AlarmsListViewModel = viewModel<AlarmsListViewModel>()
+    var toDelete: Boolean by remember { mutableStateOf(false) }
+    val alarmsListViewModel: AlarmsListViewModel = viewModel<AlarmsListViewModel>()
     val alarmsList = alarmsListViewModel.alarms
-
 
     Scaffold(
         topBar = {
@@ -44,23 +43,23 @@ fun AlaramBuilderScreen(navController: NavController){
                         )
                         Spacer(modifier = Modifier.weight(1f))
                         IconButton(
-                            onClick = { navController.navigate(route = Screen.AlarmDetails.getId(null)) },
+                            onClick = { navController.navigate(route = Screen.AlarmDetailsGraph.getId(null)) },
                             content = { Icon(imageVector = Icons.Filled.Add, contentDescription = "add") }
                         )
                     }
                 }
-            )},
-        content = {
-            innerPadding ->
-            Column(modifier = Modifier.padding(innerPadding)){
+            )
+        },
+        content = { innerPadding ->
+            Column(modifier = Modifier.padding(innerPadding)) {
                 LazyColumn {
-                    itemsIndexed(items = alarmsList){iterator, alarm ->
+                    itemsIndexed(items = alarmsList) { iterator, alarm ->
                         AlarmCell(
-                            onClickCheckbox ={
+                            onClickCheckbox = {
                                 alarmsListViewModel.updateList(iterator = iterator)
                             },
                             onClickedRow = {
-                                navController.navigate(route = Screen.AlarmDetails.getId(alarm.id))
+                                navController.navigate(route = Screen.AlarmDetailsGraph.getId(alarm.id))
                             },
                             toDelete = toDelete,
                             onDeleteAlarm = {
