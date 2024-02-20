@@ -1,11 +1,9 @@
 package com.example.myapplication.database
 
-import android.app.Application
+
 import android.content.Context
 import androidx.room.Room
-import androidx.room.RoomDatabase
 import com.example.myapplication.model.Alarm
-import com.example.myapplication.model.Repeat
 import java.util.UUID
 
 private const val DATABASE_NAME = "clock-database"
@@ -15,7 +13,7 @@ class ClockRepository private constructor(context: Context) {
         context = context.applicationContext,
         klass = ClockDatabase::class.java,
         name = DATABASE_NAME
-    ).addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5)
+    ).addMigrations(migration_1_2, migration_2_3, migration_3_4, migration_4_5, migration_5_6)
         .addTypeConverter(Converters())
         .build()
 
@@ -24,7 +22,6 @@ class ClockRepository private constructor(context: Context) {
     suspend fun updateAlarm(alarm: Alarm) = database.AlarmDao().updateAlarm(alarm)
     suspend fun addAlarm(alarm: Alarm) = database.AlarmDao().addAlarm(alarm)
     suspend fun deleteAlarm(alarm: Alarm) = database.AlarmDao().deleteAlarm(alarm)
-
 
     companion object {
         private var INSTANCE: ClockRepository? = null

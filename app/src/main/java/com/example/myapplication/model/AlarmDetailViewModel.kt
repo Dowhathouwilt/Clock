@@ -1,6 +1,8 @@
 package com.example.myapplication.model
 
 
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.TimePickerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -18,6 +20,7 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
     private val clockRepository: ClockRepository = ClockRepository.get()
     var alarm by mutableStateOf(Alarm(id = UUID.randomUUID()))
         private set
+
 
     init {
         viewModelScope.launch {
@@ -64,6 +67,16 @@ class AlarmDetailViewModel(private val alarmId: UUID?) : ViewModel() {
         }
         return shortName
     }
+
+    fun setHour(hour: Int): Alarm {
+        alarm = alarm.copy(id = alarm.id, hour = hour)
+        return alarm
+    }
+    fun setMinute(minute: Int): Alarm {
+        alarm = alarm.copy(id = alarm.id, minute = minute)
+        return alarm
+    }
+
 
     private fun addAlarm(alarm: Alarm) {
         viewModelScope.launch(Dispatchers.IO) {
