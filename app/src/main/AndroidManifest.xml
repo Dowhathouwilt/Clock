@@ -3,6 +3,8 @@
           xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.USE_EXACT_ALARM"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
+
     <application
             android:allowBackup="true"
             android:name=".ClockApplication"
@@ -24,5 +26,6 @@
             </intent-filter>
         </activity>
         <receiver android:name=".model.alarmManager.AlarmReceiver"/>
+        <receiver android:name=".model.notificationManager.NotificationReceiver"/>
     </application>
 </manifest>

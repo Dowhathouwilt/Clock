@@ -7,11 +7,11 @@ import android.content.Intent
 import com.example.myapplication.model.Alarm
 import com.example.myapplication.model.utils.AlarmTimeWorker
 
-const val EXTRA_MESSAGE = "ALARM_MESSAGE"
+const val EXTRA_ALARM_ID = "ALARM_ID"
 
 class AndroidAlarmScheduler(
     private val context: Context
-) : AlarmScheduler {
+) : AlarmSchedulerInterface {
 
     private val alarmManager = context.getSystemService(AlarmManager::class.java)
 
@@ -19,7 +19,7 @@ class AndroidAlarmScheduler(
     override fun schedule(alarm: Alarm) {
         val alarmTimeWorker = AlarmTimeWorker(alarm)
         val intent = Intent(context, AlarmReceiver::class.java).apply {
-            putExtra(EXTRA_MESSAGE, "Alarm ${alarm.label} is triggered")
+            putExtra(EXTRA_ALARM_ID, alarm.id.toString())
         }
         val pendingIntent = PendingIntent.getBroadcast(
             context,
@@ -27,8 +27,10 @@ class AndroidAlarmScheduler(
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT
         )
-
+        //TODO: add a new pendingIntent to open an app in notifications
         val clockInfo = AlarmManager.AlarmClockInfo(alarmTimeWorker.calendar.timeInMillis, pendingIntent)
+
+        alarmManager.setAlarmClock(clockInfo, pendingIntent)
     }
 
     override fun cancel(alarm: Alarm) {
@@ -37,7 +39,7 @@ class AndroidAlarmScheduler(
                 context,
                 alarm.id.hashCode(),
                 Intent(context, AlarmReceiver::class.java),
-                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+                PendingIntent.FLAG_UPDATE_CURRENT
             )
         )
     }
