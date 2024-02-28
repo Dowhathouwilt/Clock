@@ -22,7 +22,7 @@ class AlarmReceiver : BroadcastReceiver() {
             )
         else intent.getParcelableExtra(EXTRA_ALARM)
         if (alarm != null) {
-            notification.showNotification(alarm, context.getString(R.string.channel_id))
+            notification.showNotification(alarm)
             alarmScheduler.schedule(alarm)
         }
     }

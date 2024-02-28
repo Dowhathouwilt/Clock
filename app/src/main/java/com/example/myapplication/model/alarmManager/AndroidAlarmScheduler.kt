@@ -17,6 +17,7 @@ class AndroidAlarmScheduler(
 
     override fun schedule(alarm: Alarm) {
         val alarmTimeWorker = AlarmTimeWorker(alarm)
+        val activityIntent = Intent(context, AlarmReceiver::class.java)
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra(EXTRA_ALARM, alarm)
         }
@@ -26,8 +27,14 @@ class AndroidAlarmScheduler(
             intent,
             PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
-        //TODO: add a new pendingIntent to open an app in notifications
-        val clockInfo = AlarmManager.AlarmClockInfo(alarmTimeWorker.calendar.timeInMillis, pendingIntent)
+        val pendingActivityIntent = PendingIntent.getActivity(
+            context,
+            0,
+            activityIntent,
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+        )
+
+        val clockInfo = AlarmManager.AlarmClockInfo(alarmTimeWorker.calendar.timeInMillis, pendingActivityIntent)
 
         alarmManager.setAlarmClock(clockInfo, pendingIntent)
     }
