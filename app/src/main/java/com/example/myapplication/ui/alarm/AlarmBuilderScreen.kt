@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.myapplication.model.AlarmsListViewModel
+import com.example.myapplication.model.alarmManager.AndroidAlarmScheduler
 import com.example.myapplication.ui.navigation.Screen
 
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AlaramBuilderScreen(navController: NavController) {
+fun AlaramBuilderScreen(navController: NavController, alarmScheduler: AndroidAlarmScheduler) {
 
     var toDelete: Boolean by remember { mutableStateOf(false) }
     val alarmsListViewModel: AlarmsListViewModel = viewModel<AlarmsListViewModel>()
@@ -57,6 +58,8 @@ fun AlaramBuilderScreen(navController: NavController) {
                         AlarmCell(
                             onClickCheckbox = {
                                 alarmsListViewModel.updateList(iterator = iterator)
+                                if (it) alarmScheduler.schedule(alarm)
+                                else alarmScheduler.cancel(alarm)
                             },
                             onClickedRow = {
                                 navController.navigate(route = Screen.AlarmDetailsGraph.getId(alarm.id))

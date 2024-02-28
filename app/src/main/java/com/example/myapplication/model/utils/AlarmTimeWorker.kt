@@ -15,6 +15,7 @@ class AlarmTimeWorker(private val alarm: Alarm) {
             add(Calendar.DATE, getNearestDay())
             set(Calendar.HOUR_OF_DAY, alarm.hour)
             set(Calendar.MINUTE, alarm.minute)
+            set(Calendar.SECOND, 0)
         }
     }
 

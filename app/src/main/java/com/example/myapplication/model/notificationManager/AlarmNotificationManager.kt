@@ -24,18 +24,19 @@ class AlarmNotificationManager(
             context,
             1,
             activityIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val cancelIntent = PendingIntent.getBroadcast(
             context,
             2,
             broadcastNotificationIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE
         )
         val notification = NotificationCompat.Builder(context, channelId)
             .setContentText("${alarm.label} is running")
             .setContentTitle("Alarm")
             .setContentIntent(activityPendingIntent)
+            .setSmallIcon(R.drawable.baseline_alarm_on_24)
             .addAction(
                 R.drawable.baseline_cancel_24,
                 "Cancel",

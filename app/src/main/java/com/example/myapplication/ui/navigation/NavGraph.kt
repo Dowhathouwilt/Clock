@@ -12,6 +12,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.navigation
 import com.example.myapplication.model.AlarmDetailViewModel
 import com.example.myapplication.model.AlarmDetailViewModelFactory
+import com.example.myapplication.model.alarmManager.AndroidAlarmScheduler
 import com.example.myapplication.ui.alarm.AlaramBuilderScreen
 import com.example.myapplication.ui.alarm.AlarmDetailBuilderScreen
 import com.example.myapplication.ui.alarm.RepeatsBuilderScreen
@@ -20,7 +21,8 @@ import java.util.UUID
 
 @Composable
 fun SetupNavGraph(
-    navController: NavHostController
+    navController: NavHostController,
+    alarmScheduler: AndroidAlarmScheduler
 ) {
     NavHost(
         navController = navController,
@@ -29,7 +31,7 @@ fun SetupNavGraph(
         composable(
             route = Screen.AlarmHome.route
         ) {
-            AlaramBuilderScreen(navController)
+            AlaramBuilderScreen(navController, alarmScheduler)
         }
         alarmDetailsGraph(navController)
     }
