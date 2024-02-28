@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
+import com.example.myapplication.model.alarmManager.AndroidAlarmScheduler
 import com.example.myapplication.ui.alarm.AlaramBuilderScreen
 import com.example.myapplication.ui.navigation.SetupNavGraph
 
@@ -12,9 +13,10 @@ import com.example.myapplication.ui.navigation.SetupNavGraph
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        val alarmScheduler = AndroidAlarmScheduler(this)
         setContent {
-            val navController:NavHostController=  rememberNavController()
-            SetupNavGraph(navController = navController)
+            val navController:NavHostController =  rememberNavController()
+            SetupNavGraph(navController = navController, alarmScheduler = alarmScheduler)
         }
     }
 }

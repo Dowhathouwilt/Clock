@@ -1,6 +1,6 @@
 package com.example.myapplication.database
 
-import androidx.room.AutoMigration
+
 import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
@@ -11,7 +11,7 @@ import com.example.myapplication.model.Alarm
 
 @Database(
     entities = [
-        Alarm::class], version = 5, exportSchema = false
+        Alarm::class], version = 6
 )
 @TypeConverters(Converters::class)
 abstract class ClockDatabase : RoomDatabase() {
@@ -40,6 +40,12 @@ val migration_4_5 = object : Migration(4, 5) {
     override fun migrate(db: SupportSQLiteDatabase) {
         db.execSQL("DROP TABLE alarm")
         db.execSQL("CREATE TABLE IF NOT EXISTS `Alarm` (`id` BLOB NOT NULL PRIMARY KEY, 'label' TEXT NOT NULL, 'isActive' INTEGER NOT NULL, 'repeat' TEXT NOT NULL DEFAULT '')")
+    }
+}
+val migration_5_6 = object:Migration(5,6){
+    override fun migrate(db: SupportSQLiteDatabase) {
+        db.execSQL("ALTER TABLE Alarm ADD COLUMN hour INTEGER NOT NULL")
+        db.execSQL("ALTER TABLE Alarm ADD COLUMN minute INTEGER NOT NULL")
     }
 }
 
