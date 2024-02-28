@@ -13,15 +13,16 @@ import com.example.myapplication.model.Alarm
 
 const val EXTRA_CANCEL = "Cancel"
 const val EXTRA_ALARM_ID = "Alarm_ID"
+
 class AlarmNotificationManager(
     private val context: Context
-): AlarmNotificationInterface {
+) : AlarmNotificationInterface {
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
-    override fun showNotification(alarm: Alarm)  {
+    override fun showNotification(alarm: Alarm) {
         val activityIntent = Intent(context, MainActivity::class.java)
         val cancelIntent = Intent(context, NotificationReceiver::class.java).apply {
-            putExtra(EXTRA_CANCEL,true)
+            putExtra(EXTRA_CANCEL, true)
             putExtra(EXTRA_ALARM_ID, alarm.id.hashCode())
         }
         val activityPendingIntent = PendingIntent.getActivity(
@@ -34,7 +35,7 @@ class AlarmNotificationManager(
             context,
             2,
             cancelIntent,
-            PendingIntent.FLAG_UPDATE_CURRENT or  PendingIntent.FLAG_IMMUTABLE
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
         val notification = NotificationCompat.Builder(context, context.getString(R.string.channel_id))
             .setContentText("${alarm.label} is running")
@@ -48,7 +49,7 @@ class AlarmNotificationManager(
             )
             .addAction(
                 R.drawable.baseline_cancel_24,
-                "Cancel",
+                "Close",
                 actionCancelIntent
             )
             .build()

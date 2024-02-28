@@ -12,7 +12,6 @@ import com.example.myapplication.model.notificationManager.AlarmNotificationMana
 class AlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
-
         val alarmScheduler = AndroidAlarmScheduler(context)
         val notification = AlarmNotificationManager(context)
         val alarm = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU)

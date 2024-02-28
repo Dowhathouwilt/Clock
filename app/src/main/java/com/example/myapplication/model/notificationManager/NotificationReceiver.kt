@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 
-class NotificationReceiver:BroadcastReceiver() {
+class NotificationReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         val cancel = intent.getBooleanExtra(EXTRA_CANCEL, false)
