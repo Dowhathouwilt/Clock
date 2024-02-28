@@ -8,11 +8,12 @@ import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
 import com.example.myapplication.model.AlarmDetailViewModel
 import com.example.myapplication.model.AlarmDetailViewModelFactory
+import com.example.myapplication.model.alarmManager.AndroidAlarmScheduler
 import com.example.myapplication.ui.alarm.AlarmDetailBuilderScreen
 import com.example.myapplication.ui.alarm.RepeatsBuilderScreen
 import java.util.*
 
-fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController) {
+fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController, alarmScheduler: AndroidAlarmScheduler) {
     navigation(
         startDestination = Screen.AlarmDetails.route,
         route = Screen.AlarmDetailsGraph.route,
@@ -36,6 +37,7 @@ fun NavGraphBuilder.alarmDetailsGraph(navController: NavHostController) {
             )
             AlarmDetailBuilderScreen(
                 alarmDetailViewModel = sharedViewModel,
+                alarmScheduler = alarmScheduler,
                 navController = navController
             )
         }

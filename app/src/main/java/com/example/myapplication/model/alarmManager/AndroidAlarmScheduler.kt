@@ -7,7 +7,7 @@ import android.content.Intent
 import com.example.myapplication.model.Alarm
 import com.example.myapplication.model.utils.AlarmTimeWorker
 
-const val EXTRA_ALARM = "ALARM_ID"
+const val EXTRA_ALARM = "ALARM"
 
 class AndroidAlarmScheduler(
     private val context: Context

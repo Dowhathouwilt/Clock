@@ -10,6 +10,7 @@ import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.myapplication.model.AlarmDetailViewModel
+import com.example.myapplication.model.alarmManager.AndroidAlarmScheduler
 import com.example.myapplication.ui.navigation.Screen
 
 
@@ -18,6 +19,7 @@ import com.example.myapplication.ui.navigation.Screen
 @Composable
 fun AlarmDetailBuilderScreen(
     navController: NavController,
+    alarmScheduler: AndroidAlarmScheduler,
     alarmDetailViewModel: AlarmDetailViewModel
 ) {
     val alarmState = alarmDetailViewModel.alarm
@@ -31,6 +33,7 @@ fun AlarmDetailBuilderScreen(
                 Button(
                     onClick = {
                         alarmDetailViewModel.addOrUpdate(alarmState)
+                        if (alarmState.isActive) alarmScheduler.schedule(alarmState)
                         navController.navigate(
                             route = Screen.AlarmHome.route
                         ) {

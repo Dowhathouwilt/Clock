@@ -33,7 +33,7 @@ fun SetupNavGraph(
         ) {
             AlaramBuilderScreen(navController, alarmScheduler)
         }
-        alarmDetailsGraph(navController)
+        alarmDetailsGraph(navController, alarmScheduler)
     }
 }
 
