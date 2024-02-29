@@ -12,6 +12,9 @@ interface AlarmDao {
     @Query("SELECT * FROM alarm WHERE id=(:id)")
     suspend fun getAlarm(id: UUID): Alarm
 
+    @Query("SELECT * From alarm Where isActive = 1")
+    suspend fun getActiveAlarms():List<Alarm>
+
     @Update
     suspend fun updateAlarm(alarm: Alarm)
 
@@ -20,5 +23,6 @@ interface AlarmDao {
 
     @Delete
     suspend fun deleteAlarm(alarm: Alarm)
+
 
 }
