@@ -4,6 +4,7 @@ import android.app.AlarmManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
+import com.example.myapplication.MainActivity
 import com.example.myapplication.model.Alarm
 import com.example.myapplication.model.utils.AlarmTimeWorker
 
@@ -17,7 +18,7 @@ class AndroidAlarmScheduler(
 
     override fun schedule(alarm: Alarm) {
         val alarmTimeWorker = AlarmTimeWorker(alarm)
-        val activityIntent = Intent(context, AlarmReceiver::class.java)
+        val activityIntent = Intent(context, MainActivity::class.java)
         val intent = Intent(context, AlarmReceiver::class.java).apply {
             putExtra(EXTRA_ALARM, alarm)
         }
