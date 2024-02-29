@@ -39,6 +39,7 @@ class AlarmNotificationManager(
         )
         val notification = NotificationCompat.Builder(context, context.getString(R.string.channel_id))
             .setContentText("${alarm.label} is running")
+            .setAutoCancel(true)
             .setContentTitle("Alarm")
             .setContentIntent(activityPendingIntent)
             .setSmallIcon(R.drawable.baseline_alarm_on_24)
