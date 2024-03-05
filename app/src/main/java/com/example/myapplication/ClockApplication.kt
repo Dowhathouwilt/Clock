@@ -4,24 +4,29 @@ import android.app.Application
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
-import androidx.core.content.ContextCompat
-import com.example.myapplication.database.ClockRepository
+import com.example.myapplication.app.api.ClockHttpRepository
+import com.example.myapplication.app.database.ClockRepository
 
 class ClockApplication() : Application() {
     override fun onCreate() {
         super.onCreate()
         ClockRepository.initialize(this)
-        createNotificationChannel()
+        ClockHttpRepository.initialize()
+        createNotificationChannel(
+            R.string.channel_id,
+            R.string.channel_name,
+            R.string.channel_description,
+            NotificationManager.IMPORTANCE_HIGH
+        )
     }
 
-    private fun createNotificationChannel() {
+    private fun createNotificationChannel(channelId:Int, channelName: Int, channelDescription: Int, channelImportance: Int) {
         val channel = NotificationChannel(
-            getString(R.string.channel_id),
-            getString(R.string.channel_name),
-            NotificationManager.IMPORTANCE_HIGH
+            getString(channelId),
+            getString(channelName),
+            channelImportance
         ).apply {
-            description = getString(R.string.channel_description)
+            description = getString(channelDescription)
         }
         val notificationManager = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
